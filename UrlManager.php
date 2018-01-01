@@ -140,14 +140,13 @@ class UrlManager extends \yii\web\UrlManager
                 return $url;
             } else {
                 $baseUrl = $this->getBaseUrl();
+
                 $url = implode(self::SEPARATOR_PATH, [
                     $baseUrl,
                     $language,
-                    ltrim($url, $baseUrl),
+                    ltrim(str_replace('#' . $baseUrl, '', '#' . $url), '/'),
                 ]);
-                $pattern = sprintf('#%s{2,}#', self::SEPARATOR_PATH);
-                $url = preg_replace($pattern, self::SEPARATOR_PATH, $url);
-
+                
                 return $url;
             }
         } else {
