@@ -140,10 +140,14 @@ class UrlManager extends \yii\web\UrlManager
                 return $url;
             } else {
                 $baseUrl = $this->getBaseUrl();
+                $baseUrlLength = mb_strlen($baseUrl, Yii::$app->charset);
+                if ($baseUrlLength > 0) {
+                    $url = mb_substr($url, $baseUrlLength, null, Yii::$app->charset);
+                }
                 $url = implode(self::SEPARATOR_PATH, [
                     $baseUrl,
                     $language,
-                    ltrim($url, $baseUrl),
+                    $url,
                 ]);
                 $pattern = sprintf('#%s{2,}#', self::SEPARATOR_PATH);
                 $url = preg_replace($pattern, self::SEPARATOR_PATH, $url);

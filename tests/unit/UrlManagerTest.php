@@ -175,6 +175,25 @@ class UrlManagerTest extends Unit
 
         $request->setQueryParams([$urlManager->queryParam => 'de']);
         $this->tester->assertSame('/admin/site/index', $urlManager->createUrl(['site/index']));
+
+        $urlManager = $this->getUrlManager();
+        $request = $this->getRequest();
+        $request->setBaseUrl('/site/');
+        $this->mockWebApplication($urlManager, $request);
+
+        $request->setQueryParams([$urlManager->queryParam => 'en']);
+        $this->tester->assertSame('/site/en/site/index', $urlManager->createUrl(['site/index']));
+
+        $urlManager = $this->getUrlManager();
+        $urlManager->addRules([
+            'главная' => 'site/index'
+        ]);
+        $request = $this->getRequest();
+        $request->setBaseUrl('/админ');
+        $this->mockWebApplication($urlManager, $request);
+
+        $request->setQueryParams([$urlManager->queryParam => 'ru']);
+        $this->tester->assertSame('/админ/ru/главная', $urlManager->createUrl(['site/index']));
     }
 
     public function testCreateUrlAsSubdomain()
