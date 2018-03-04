@@ -261,6 +261,7 @@ class UrlManagerTest extends Unit
                 'languages' => ['en', 'ru'],
                 'enablePrettyUrl' => true,
                 'showScriptName' => false,
+                'cache' => null
             ],
             $config
         ));
